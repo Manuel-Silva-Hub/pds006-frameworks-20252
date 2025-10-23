@@ -1,13 +1,16 @@
 import { DeviceId } from "@/core/domain";
 import { DevicePhotoRepository } from "@/core/repository";
+import { Server } from "bun";
 
 const MEDIA_PORT = Bun.env.MEDIA_PORT || 8080
 const BASE_PATH = "./public"
 const BASE_URL = `http://localhost:${MEDIA_PORT}/photo/`
 
 export class FileSystemPhotoRepository implements DevicePhotoRepository {
+  public server: Server
+
   constructor() {
-    Bun.serve({
+    this.server = Bun.serve({
       port: MEDIA_PORT,
       routes: {
         "/photo/:filename": req => new Response(Bun.file(`${BASE_PATH}/${req.params.filename}`))
