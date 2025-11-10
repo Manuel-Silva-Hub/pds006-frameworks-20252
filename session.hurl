@@ -15,14 +15,23 @@ frequent_checkin_url: jsonpath "$.checkinURL"
 frequent_checkout_url: jsonpath "$.checkoutURL"
 [Asserts]
 jsonpath "$.device.id" exists
+jsonpath "$.device.brand" equals "Sony"
+jsonpath "$.device.model" equals "VAIO"
+jsonpath "$.device.owner.name" equals "Harry Potter"
+jsonpath "$.device.owner.id" equals "123456"
 jsonpath "$.checkinURL" exists
 jsonpath "$.checkoutURL" exists
+jsonpath "$.checkinURL" matches ".*/api/computers/frequent/checkin/.*"
+jsonpath "$.checkoutURL" matches ".*/api/devices/checkout/.*"
 
 GET http://localhost:3000/api/computers/frequent
 
 HTTP/1.1 200
 [Asserts]
 jsonpath "$[*].device.id" contains "{{frequent_id}}"
+jsonpath "$[*]" count 1
+jsonpath "$[*].device.brand" contains "Sony"
+jsonpath "$[*].device.owner.name" contains "Harry Potter"
 
 POST http://localhost:3000/api/computers/checkin
 [FormData]
@@ -37,13 +46,29 @@ HTTP/1.1 200
 computer_id: jsonpath "$.id"
 [Asserts]
 jsonpath "$.id" exists
+jsonpath "$.brand" equals "Dell"
+jsonpath "$.model" equals "Latitude"
+jsonpath "$.owner.name" equals "Alice Smith"
+jsonpath "$.owner.id" equals "A12345"
 jsonpath "$.photoURL" exists
+jsonpath "$.checkinAt" exists
 
 GET http://localhost:3000/api/computers
 
 HTTP/1.1 200
 [Asserts]
 jsonpath "$[*].id" contains "{{computer_id}}"
+jsonpath "$[*].brand" contains "Dell"
+jsonpath "$[*].owner.name" contains "Alice Smith"
+jsonpath "$[*]" count 1
+
+GET http://localhost:3000/api/devices/entered
+
+HTTP/1.1 200
+[Asserts]
+jsonpath "$[*]" count 1
+jsonpath "$[*].id" contains "{{computer_id}}"
+jsonpath "$[*].type" contains "computer"
 
 POST http://localhost:3000/api/medicaldevices/checkin
 [FormData]
@@ -59,32 +84,52 @@ HTTP/1.1 200
 medical_id: jsonpath "$.id"
 [Asserts]
 jsonpath "$.id" exists
+jsonpath "$.brand" equals "GE"
+jsonpath "$.model" equals "ECG1000"
+jsonpath "$.owner.name" equals "Dr. House"
+jsonpath "$.owner.id" equals "123512464"
+jsonpath "$.serial" equals "F48238R7Y2R"
 jsonpath "$.photoURL" exists
+jsonpath "$.checkinAt" exists
 
 GET http://localhost:3000/api/medicaldevices
 
 HTTP/1.1 200
 [Asserts]
 jsonpath "$[*].id" contains "{{medical_id}}"
+jsonpath "$[*].brand" contains "GE"
+jsonpath "$[*].owner.name" contains "Dr. House"
+jsonpath "$[*].serial" contains "F48238R7Y2R"
+jsonpath "$[*]" count 1
 
 GET http://localhost:3000/api/devices/entered
 
 HTTP/1.1 200
 [Asserts]
+jsonpath "$[*]" count 2
 jsonpath "$[*].id" contains "{{computer_id}}"
 jsonpath "$[*].id" contains "{{medical_id}}"
+jsonpath "$[*].type" contains "computer"
+jsonpath "$[*].type" contains "medical-device"
 
 PATCH {{frequent_checkin_url}}
 
 HTTP/1.1 200
 [Asserts]
 jsonpath "$.device.id" equals "{{frequent_id}}"
+jsonpath "$.device.brand" equals "Sony"
+jsonpath "$.device.owner.name" equals "Harry Potter"
+jsonpath "$.device.checkinAt" exists
 
 GET http://localhost:3000/api/devices/entered
 
 HTTP/1.1 200
 [Asserts]
+jsonpath "$[*]" count 3
 jsonpath "$[*].id" contains "{{frequent_id}}"
+jsonpath "$[*].id" contains "{{computer_id}}"
+jsonpath "$[*].id" contains "{{medical_id}}"
+jsonpath "$[*].type" contains "frequent-computer"
 
 PATCH {{frequent_checkout_url}}
 
@@ -94,6 +139,31 @@ GET http://localhost:3000/api/devices/entered
 
 HTTP/1.1 200
 [Asserts]
+jsonpath "$[*]" count 2
 jsonpath "$[*].id" contains "{{computer_id}}"
 jsonpath "$[*].id" contains "{{medical_id}}"
+jsonpath "$[*].type" contains "computer"
+jsonpath "$[*].type" contains "medical-device"
+
+PATCH http://localhost:3000/api/devices/checkout/{{computer_id}}
+
+HTTP/1.1 200
+
+GET http://localhost:3000/api/devices/entered
+
+HTTP/1.1 200
+[Asserts]
+jsonpath "$[*]" count 1
+jsonpath "$[*].id" contains "{{medical_id}}"
+jsonpath "$[*].type" contains "medical-device"
+
+PATCH http://localhost:3000/api/devices/checkout/{{medical_id}}
+
+HTTP/1.1 200
+
+GET http://localhost:3000/api/devices/entered
+
+HTTP/1.1 200
+[Asserts]
+jsonpath "$[*]" count 0
 
