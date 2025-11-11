@@ -63,6 +63,7 @@ jobs:
         with:
           sparse-checkout: |
             session.hurl
+            tests/fixtures/test.png
           sparse-checkout-cone-mode: false
       - name: Setup hurl (API testing tool)
         uses: gacts/install-hurl@v1
