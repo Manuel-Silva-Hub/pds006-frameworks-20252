@@ -29,7 +29,7 @@ GET http://localhost:3000/api/computers/frequent
 HTTP/1.1 200
 [Asserts]
 jsonpath "$[*].device.id" contains "{{frequent_id}}"
-jsonpath "$[*]" count 1
+jsonpath "$[*]" count == 1
 jsonpath "$[*].device.brand" contains "Sony"
 jsonpath "$[*].device.owner.name" contains "Harry Potter"
 
@@ -60,13 +60,13 @@ HTTP/1.1 200
 jsonpath "$[*].id" contains "{{computer_id}}"
 jsonpath "$[*].brand" contains "Dell"
 jsonpath "$[*].owner.name" contains "Alice Smith"
-jsonpath "$[*]" count 1
+jsonpath "$[*]" count == 1
 
 GET http://localhost:3000/api/devices/entered
 
 HTTP/1.1 200
 [Asserts]
-jsonpath "$[*]" count 1
+jsonpath "$[*]" count == 1
 jsonpath "$[*].id" contains "{{computer_id}}"
 jsonpath "$[*].type" contains "computer"
 
@@ -100,13 +100,13 @@ jsonpath "$[*].id" contains "{{medical_id}}"
 jsonpath "$[*].brand" contains "GE"
 jsonpath "$[*].owner.name" contains "Dr. House"
 jsonpath "$[*].serial" contains "F48238R7Y2R"
-jsonpath "$[*]" count 1
+jsonpath "$[*]" count == 1
 
 GET http://localhost:3000/api/devices/entered
 
 HTTP/1.1 200
 [Asserts]
-jsonpath "$[*]" count 2
+jsonpath "$[*]" count == 2
 jsonpath "$[*].id" contains "{{computer_id}}"
 jsonpath "$[*].id" contains "{{medical_id}}"
 jsonpath "$[*].type" contains "computer"
@@ -125,7 +125,7 @@ GET http://localhost:3000/api/devices/entered
 
 HTTP/1.1 200
 [Asserts]
-jsonpath "$[*]" count 3
+jsonpath "$[*]" count == 3
 jsonpath "$[*].id" contains "{{frequent_id}}"
 jsonpath "$[*].id" contains "{{computer_id}}"
 jsonpath "$[*].id" contains "{{medical_id}}"
@@ -139,7 +139,7 @@ GET http://localhost:3000/api/devices/entered
 
 HTTP/1.1 200
 [Asserts]
-jsonpath "$[*]" count 2
+jsonpath "$[*]" count == 2
 jsonpath "$[*].id" contains "{{computer_id}}"
 jsonpath "$[*].id" contains "{{medical_id}}"
 jsonpath "$[*].type" contains "computer"
@@ -153,7 +153,7 @@ GET http://localhost:3000/api/devices/entered
 
 HTTP/1.1 200
 [Asserts]
-jsonpath "$[*]" count 1
+jsonpath "$[*]" count == 1
 jsonpath "$[*].id" contains "{{medical_id}}"
 jsonpath "$[*].type" contains "medical-device"
 
@@ -165,5 +165,5 @@ GET http://localhost:3000/api/devices/entered
 
 HTTP/1.1 200
 [Asserts]
-jsonpath "$[*]" count 0
+jsonpath "$[*]" count == 0
 
