@@ -1,6 +1,6 @@
 # Sesión de pruebas de la API de dispositivos con Hurl
 
-POST http://localhost:3000/api/computers/frequent
+POST {{host}}/api/computers/frequent
 [MultipartFormData]
 brand: Sony
 model: VAIO
@@ -24,7 +24,7 @@ jsonpath "$.checkoutURL" exists
 jsonpath "$.checkinURL" matches ".*/api/computers/frequent/checkin/.*"
 jsonpath "$.checkoutURL" matches ".*/api/devices/checkout/.*"
 
-GET http://localhost:3000/api/computers/frequent
+GET {{host}}/api/computers/frequent
 
 HTTP/1.1 200
 [Asserts]
@@ -33,7 +33,7 @@ jsonpath "$[*]" count == 1
 jsonpath "$[*].device.brand" contains "Sony"
 jsonpath "$[*].device.owner.name" contains "Harry Potter"
 
-POST http://localhost:3000/api/computers/checkin
+POST {{host}}/api/computers/checkin
 [MultipartFormData]
 brand: Dell
 model: Latitude
@@ -53,7 +53,7 @@ jsonpath "$.owner.id" == "A12345"
 jsonpath "$.photoURL" exists
 jsonpath "$.checkinAt" exists
 
-GET http://localhost:3000/api/computers
+GET {{host}}/api/computers
 
 HTTP/1.1 200
 [Asserts]
@@ -62,7 +62,7 @@ jsonpath "$[*].brand" contains "Dell"
 jsonpath "$[*].owner.name" contains "Alice Smith"
 jsonpath "$[*]" count == 1
 
-GET http://localhost:3000/api/devices/entered
+GET {{host}}/api/devices/entered
 
 HTTP/1.1 200
 [Asserts]
@@ -70,7 +70,7 @@ jsonpath "$[*]" count == 1
 jsonpath "$[*].id" contains "{{computer_id}}"
 jsonpath "$[*].type" contains "computer"
 
-POST http://localhost:3000/api/medicaldevices/checkin
+POST {{host}}/api/medicaldevices/checkin
 [MultipartFormData]
 brand: GE
 model: ECG1000
@@ -92,7 +92,7 @@ jsonpath "$.serial" == "F48238R7Y2R"
 jsonpath "$.photoURL" exists
 jsonpath "$.checkinAt" exists
 
-GET http://localhost:3000/api/medicaldevices
+GET {{host}}/api/medicaldevices
 
 HTTP/1.1 200
 [Asserts]
@@ -102,7 +102,7 @@ jsonpath "$[*].owner.name" contains "Dr. House"
 jsonpath "$[*].serial" contains "F48238R7Y2R"
 jsonpath "$[*]" count == 1
 
-GET http://localhost:3000/api/devices/entered
+GET {{host}}/api/devices/entered
 
 HTTP/1.1 200
 [Asserts]
@@ -121,7 +121,7 @@ jsonpath "$.device.brand" == "Sony"
 jsonpath "$.device.owner.name" == "Harry Potter"
 jsonpath "$.device.checkinAt" exists
 
-GET http://localhost:3000/api/devices/entered
+GET {{host}}/api/devices/entered
 
 HTTP/1.1 200
 [Asserts]
@@ -135,7 +135,7 @@ PATCH {{frequent_checkout_url}}
 
 HTTP/1.1 200
 
-GET http://localhost:3000/api/devices/entered
+GET {{host}}/api/devices/entered
 
 HTTP/1.1 200
 [Asserts]
@@ -145,11 +145,11 @@ jsonpath "$[*].id" contains "{{medical_id}}"
 jsonpath "$[*].type" contains "computer"
 jsonpath "$[*].type" contains "medical-device"
 
-PATCH http://localhost:3000/api/devices/checkout/{{computer_id}}
+PATCH {{host}}/api/devices/checkout/{{computer_id}}
 
 HTTP/1.1 200
 
-GET http://localhost:3000/api/devices/entered
+GET {{host}}/api/devices/entered
 
 HTTP/1.1 200
 [Asserts]
@@ -157,11 +157,11 @@ jsonpath "$[*]" count == 1
 jsonpath "$[*].id" contains "{{medical_id}}"
 jsonpath "$[*].type" contains "medical-device"
 
-PATCH http://localhost:3000/api/devices/checkout/{{medical_id}}
+PATCH {{host}}/api/devices/checkout/{{medical_id}}
 
 HTTP/1.1 200
 
-GET http://localhost:3000/api/devices/entered
+GET {{host}}/api/devices/entered
 
 HTTP/1.1 200
 [Asserts]
