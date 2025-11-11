@@ -1,7 +1,7 @@
 # Sesión de pruebas de la API de dispositivos con Hurl
 
 POST http://localhost:3000/api/computers/frequent
-[FormData]
+[MultipartFormData]
 brand: Sony
 model: VAIO
 ownerName: Harry Potter
@@ -34,7 +34,7 @@ jsonpath "$[*].device.brand" contains "Sony"
 jsonpath "$[*].device.owner.name" contains "Harry Potter"
 
 POST http://localhost:3000/api/computers/checkin
-[FormData]
+[MultipartFormData]
 brand: Dell
 model: Latitude
 ownerName: Alice Smith
@@ -71,7 +71,7 @@ jsonpath "$[*].id" contains "{{computer_id}}"
 jsonpath "$[*].type" contains "computer"
 
 POST http://localhost:3000/api/medicaldevices/checkin
-[FormData]
+[MultipartFormData]
 brand: GE
 model: ECG1000
 ownerName: Dr. House
