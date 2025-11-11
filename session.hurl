@@ -15,10 +15,10 @@ frequent_checkin_url: jsonpath "$.checkinURL"
 frequent_checkout_url: jsonpath "$.checkoutURL"
 [Asserts]
 jsonpath "$.device.id" exists
-jsonpath "$.device.brand" equals "Sony"
-jsonpath "$.device.model" equals "VAIO"
-jsonpath "$.device.owner.name" equals "Harry Potter"
-jsonpath "$.device.owner.id" equals "123456"
+jsonpath "$.device.brand" == "Sony"
+jsonpath "$.device.model" == "VAIO"
+jsonpath "$.device.owner.name" == "Harry Potter"
+jsonpath "$.device.owner.id" == "123456"
 jsonpath "$.checkinURL" exists
 jsonpath "$.checkoutURL" exists
 jsonpath "$.checkinURL" matches ".*/api/computers/frequent/checkin/.*"
@@ -46,10 +46,10 @@ HTTP/1.1 200
 computer_id: jsonpath "$.id"
 [Asserts]
 jsonpath "$.id" exists
-jsonpath "$.brand" equals "Dell"
-jsonpath "$.model" equals "Latitude"
-jsonpath "$.owner.name" equals "Alice Smith"
-jsonpath "$.owner.id" equals "A12345"
+jsonpath "$.brand" == "Dell"
+jsonpath "$.model" == "Latitude"
+jsonpath "$.owner.name" == "Alice Smith"
+jsonpath "$.owner.id" == "A12345"
 jsonpath "$.photoURL" exists
 jsonpath "$.checkinAt" exists
 
@@ -84,11 +84,11 @@ HTTP/1.1 200
 medical_id: jsonpath "$.id"
 [Asserts]
 jsonpath "$.id" exists
-jsonpath "$.brand" equals "GE"
-jsonpath "$.model" equals "ECG1000"
-jsonpath "$.owner.name" equals "Dr. House"
-jsonpath "$.owner.id" equals "123512464"
-jsonpath "$.serial" equals "F48238R7Y2R"
+jsonpath "$.brand" == "GE"
+jsonpath "$.model" == "ECG1000"
+jsonpath "$.owner.name" == "Dr. House"
+jsonpath "$.owner.id" == "123512464"
+jsonpath "$.serial" == "F48238R7Y2R"
 jsonpath "$.photoURL" exists
 jsonpath "$.checkinAt" exists
 
@@ -116,9 +116,9 @@ PATCH {{frequent_checkin_url}}
 
 HTTP/1.1 200
 [Asserts]
-jsonpath "$.device.id" equals "{{frequent_id}}"
-jsonpath "$.device.brand" equals "Sony"
-jsonpath "$.device.owner.name" equals "Harry Potter"
+jsonpath "$.device.id" == "{{frequent_id}}"
+jsonpath "$.device.brand" == "Sony"
+jsonpath "$.device.owner.name" == "Harry Potter"
 jsonpath "$.device.checkinAt" exists
 
 GET http://localhost:3000/api/devices/entered
