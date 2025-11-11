@@ -52,7 +52,7 @@ describe("Elysia Device API (multipart compatible)", () => {
         medicalDeviceService
     ).app
 
-    app.listen(443)
+    app.listen(3000)
 
     mockPhoto = await createTestImageFile()
     BASE_URL = `http://${app.server?.hostname}:${app.server?.port}/api`;

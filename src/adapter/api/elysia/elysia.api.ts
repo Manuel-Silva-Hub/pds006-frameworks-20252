@@ -25,7 +25,7 @@ export class ElysiaApiAdapter {
     }
 
     async run() {
-        this.app.listen(443)
+        this.app.listen(3000)
         
         console.log("El servidor esta corriendo en el puerto 3000")
     }
