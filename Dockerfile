@@ -20,7 +20,7 @@ RUN bun install
 COPY . .
 
 # Exponer puerto
-EXPOSE 3000
+EXPOSE 443
 
 # ESTO FALTA - Comando para iniciar
 CMD ["bun", "run", "src/index.ts"]
