@@ -6,7 +6,7 @@ brand: Sony
 model: VAIO
 ownerName: Harry Potter
 ownerId: 123456
-photo: < tests/fixtures/test.png;type=image/png
+photo: < tests/fixtures/test.png;type=image/png;filename=test.png
 
 HTTP/1.1 200
 [Captures]
