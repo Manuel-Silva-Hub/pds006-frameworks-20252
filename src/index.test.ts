@@ -36,7 +36,7 @@ describe("Elysia Device API (multipart compatible)", () => {
     const computerService = new ComputerService(
         deviceRepository, 
         photoRepository, 
-        new URL("http://localhost:3000/api")
+        new URL("http://localhost:443/api")
     )
 
     const deviceService = new DeviceService(deviceRepository)
@@ -52,7 +52,7 @@ describe("Elysia Device API (multipart compatible)", () => {
         medicalDeviceService
     ).app
 
-    app.listen(3000)
+    app.listen(433)
 
     mockPhoto = await createTestImageFile()
     BASE_URL = `http://${app.server?.hostname}:${app.server?.port}/api`;
