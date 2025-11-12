@@ -2,7 +2,6 @@
 
 # Registrar un computador frecuente (sin foto)
 POST {{host}}/api/computers/frequent
-[Headers]
 Content-Type: application/json
 
 {
@@ -36,7 +35,6 @@ jsonpath "$[*]" count >= 1
 
 # Registrar un computador normal
 POST {{host}}/api/computers/checkin
-[Headers]
 Content-Type: application/json
 
 {
@@ -66,7 +64,6 @@ jsonpath "$[*]" count >= 1
 
 # Registrar dispositivo médico
 POST {{host}}/api/medicaldevices/checkin
-[Headers]
 Content-Type: application/json
 
 {
