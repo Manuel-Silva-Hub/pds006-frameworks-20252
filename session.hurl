@@ -6,7 +6,7 @@ brand: Sony
 model: VAIO
 ownerName: Harry Potter
 ownerId: 123456
-photo: @tests/fixtures/test.png
+photo: < tests/fixtures/test.png;type=image/png
 
 HTTP/1.1 200
 [Captures]
@@ -39,7 +39,7 @@ brand: Dell
 model: Latitude
 ownerName: Alice Smith
 ownerId: A12345
-photo: @tests/fixtures/test.png
+photo: < tests/fixtures/test.png;type=image/png
 
 HTTP/1.1 200
 [Captures]
@@ -77,7 +77,7 @@ model: ECG1000
 ownerName: Dr. House
 ownerId: 123512464
 serial: F48238R7Y2R
-photo: @tests/fixtures/test.png
+photo: < tests/fixtures/test.png;type=image/png
 
 HTTP/1.1 200
 [Captures]
@@ -166,4 +166,3 @@ GET {{host}}/api/devices/entered
 HTTP/1.1 200
 [Asserts]
 jsonpath "$[*]" count == 0
-
