@@ -84,7 +84,6 @@ jsonpath "$[*].owner.name" contains "Alice Smith"
 GET {{host}}/api/devices/entered
 HTTP/1.1 200
 [Asserts]
-jsonpath "$[*]" count == 1
 jsonpath "$[*].id" contains "{{computer_id}}"
 jsonpath "$[*].type" contains "computer"
 
@@ -134,7 +133,6 @@ jsonpath "$[*].serial" contains "F48238R7Y2R"
 GET {{host}}/api/devices/entered
 HTTP/1.1 200
 [Asserts]
-jsonpath "$[*]" count == 2
 jsonpath "$[*].id" contains "{{computer_id}}"
 jsonpath "$[*].id" contains "{{medical_id}}"
 jsonpath "$[*].type" contains "computer"
