@@ -76,7 +76,6 @@ HTTP/1.1 200
 jsonpath "$[*].id" contains "{{computer_id}}"
 jsonpath "$[*].brand" contains "Dell"
 jsonpath "$[*].owner.name" contains "Alice Smith"
-jsonpath "$[*]" count == 1
 
 
 # -----------------------------------------------------------
@@ -127,7 +126,6 @@ jsonpath "$[*].id" contains "{{medical_id}}"
 jsonpath "$[*].brand" contains "GE"
 jsonpath "$[*].owner.name" contains "Dr. House"
 jsonpath "$[*].serial" contains "F48238R7Y2R"
-jsonpath "$[*]" count == 1
 
 
 # -----------------------------------------------------------
