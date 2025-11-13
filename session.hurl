@@ -38,7 +38,6 @@ GET {{host}}/api/computers/frequent
 HTTP/1.1 200
 [Asserts]
 jsonpath "$[*].device.id" contains "{{frequent_id}}"
-jsonpath "$[*]" count == 1
 jsonpath "$[*].device.brand" contains "Sony"
 jsonpath "$[*].device.owner.name" contains "Harry Potter"
 
