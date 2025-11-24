@@ -16,8 +16,12 @@ photo: file, tests/fixtures/test.png;type=image/png
 HTTP/1.1 200
 [Captures]
 frequent_id: jsonpath "$.device.id"
-frequent_checkin_url: jsonpath "$.checkinURL"
-frequent_checkout_url: jsonpath "$.checkoutURL"
+frequent_checkin_url_raw: jsonpath "$.checkinURL"
+frequent_checkout_url_raw: jsonpath "$.checkoutURL"
+
+[Set]
+frequent_checkin_url = "https://pds006in.azurewebsites.net:443" + frequent_checkin_url_raw.replace("^.*?(?=/api)", "")
+frequent_checkout_url = "https://pds006in.azurewebsites.net:443" + frequent_checkout_url_raw.replace("^.*?(?=/api)", "")
 
 [Asserts]
 jsonpath "$.device.id" exists
