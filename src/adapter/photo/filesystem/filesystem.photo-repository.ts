@@ -2,7 +2,7 @@ import { DeviceId } from "@/core/domain";
 import { DevicePhotoRepository } from "@/core/repository";
 import { Server } from "bun";
 
-const MEDIA_PORT = Bun.env.MEDIA_PORT || 443
+const MEDIA_PORT = Bun.env.MEDIA_PORT || 80
 const BASE_PATH = "./public"
 const BASE_URL = `http://localhost:${MEDIA_PORT}/photo/`
 
