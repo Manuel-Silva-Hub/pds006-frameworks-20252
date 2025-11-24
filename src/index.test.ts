@@ -36,7 +36,7 @@ describe("Elysia Device API (multipart compatible)", () => {
     const computerService = new ComputerService(
         deviceRepository, 
         photoRepository, 
-        new URL("http://localhost:3000/api")
+        new URL("http://localhost:443/api")
     )
 
     const deviceService = new DeviceService(deviceRepository)

@@ -1,4 +1,4 @@
-name: Manuel Alexis Silva Ruiz
+name: Test for deploying
 on:
   workflow_dispatch:
     inputs:
