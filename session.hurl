@@ -1,5 +1,5 @@
 # ===========================================================
-# 🧪 Sesión de pruebas de la API de Dispositivos
+# 🧪 Sesión de pruebas de la API de Dispositivos (sin imágenes)
 # ===========================================================
 
 # -----------------------------------------------------------
@@ -11,7 +11,6 @@ brand: Sony
 model: VAIO
 ownerName: Harry Potter
 ownerId: 123456
-photo: file, tests/fixtures/test.png;type=image/png
 
 HTTP/1.1 200
 [Captures]
@@ -51,7 +50,6 @@ brand: Dell
 model: Latitude
 ownerName: Alice Smith
 ownerId: A12345
-photo: file, tests/fixtures/test.png;type=image/png
 
 HTTP/1.1 200
 [Captures]
@@ -100,7 +98,6 @@ model: ECG1000
 ownerName: Dr. House
 ownerId: 123512464
 serial: F48238R7Y2R
-photo: file, tests/fixtures/test.png;type=image/png
 
 HTTP/1.1 200
 [Captures]
@@ -151,7 +148,7 @@ HTTP/1.1 200
 [Asserts]
 jsonpath "$.device.id" == "{{frequent_id}}"
 jsonpath "$.device.brand" == "Sony"
-jsonpath "$.device.owner.name" == "Harry Potter"
+jsonpath "$$.device.owner.name" == "Harry Potter"
 jsonpath "$.device.checkinAt" exists
 
 
