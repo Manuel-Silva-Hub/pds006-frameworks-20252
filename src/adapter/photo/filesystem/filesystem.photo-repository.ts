@@ -8,7 +8,7 @@ const BASE_URL = `http://localhost:${MEDIA_PORT}/photo/`
 
 export class FileSystemPhotoRepository implements DevicePhotoRepository {
   public server: Server
-
+/*
   constructor() {
     this.server = Bun.serve({
       port: MEDIA_PORT,
@@ -20,6 +20,8 @@ export class FileSystemPhotoRepository implements DevicePhotoRepository {
       }
     });
   }
+
+  */
 
   async savePhoto(file: File, id: DeviceId): Promise<URL> {
     const extension = this.getFileExtension(file)
