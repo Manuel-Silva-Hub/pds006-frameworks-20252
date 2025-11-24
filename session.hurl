@@ -16,12 +16,6 @@ photo: file, tests/fixtures/test.png;type=image/png
 HTTP/1.1 200
 [Captures]
 frequent_id: jsonpath "$.device.id"
-frequent_checkin_url_raw: jsonpath "$.checkinURL"
-frequent_checkout_url_raw: jsonpath "$.checkoutURL"
-
-[Variables]
-frequent_checkin_url: {{ host }}{{ checkin_path | replace("^.*?(?=/api)", "") }}
-frequent_checkout_url: {{ host }}{{ checkout_path | replace("^.*?(?=/api)", "") }}
 
 [Asserts]
 jsonpath "$.device.id" exists
@@ -29,10 +23,7 @@ jsonpath "$.device.brand" == "Sony"
 jsonpath "$.device.model" == "VAIO"
 jsonpath "$.device.owner.name" == "Harry Potter"
 jsonpath "$.device.owner.id" == "123456"
-jsonpath "$.checkinURL" exists
-jsonpath "$.checkoutURL" exists
-jsonpath "$.checkinURL" matches ".*/api/computers/frequent/checkin/.*"
-jsonpath "$.checkoutURL" matches ".*/api/devices/checkout/.*"
+jsonpath "$.checkinAt" does_not_exist
 
 
 # -----------------------------------------------------------
@@ -146,7 +137,7 @@ jsonpath "$[*].type" contains "medical-device"
 # -----------------------------------------------------------
 # 9️⃣ Check-in del computador frecuente
 # -----------------------------------------------------------
-PATCH {{frequent_checkin_url}}
+PATCH {{host}}/api/computers/frequent/checkin/{{frequent_id}}
 HTTP/1.1 200
 [Asserts]
 jsonpath "$.device.id" == "{{frequent_id}}"
@@ -170,7 +161,7 @@ jsonpath "$[*].type" contains "frequent-computer"
 # -----------------------------------------------------------
 # 1️⃣1️⃣ Checkout del computador frecuente
 # -----------------------------------------------------------
-PATCH {{frequent_checkout_url}}
+PATCH {{host}}/api/computers/frequent/checkout/{{frequent_id}}
 HTTP/1.1 200
 
 
@@ -216,4 +207,4 @@ HTTP/1.1 200
 GET {{host}}/api/devices/entered
 HTTP/1.1 200
 [Asserts]
-
+jsonpath "$" == []
