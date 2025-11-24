@@ -21,8 +21,6 @@ export class FileSystemPhotoRepository implements DevicePhotoRepository {
     });
   }
 
-  */
-
   async savePhoto(file: File, id: DeviceId): Promise<URL> {
     const extension = this.getFileExtension(file)
     if (!extension) return Promise.reject()
@@ -42,6 +40,8 @@ export class FileSystemPhotoRepository implements DevicePhotoRepository {
     if (parts.length > 1) {
       return parts.pop();
     }
+
+      */
 
     return undefined;
   }
