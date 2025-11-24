@@ -19,9 +19,9 @@ frequent_id: jsonpath "$.device.id"
 frequent_checkin_url_raw: jsonpath "$.checkinURL"
 frequent_checkout_url_raw: jsonpath "$.checkoutURL"
 
-[Set]
-frequent_checkin_url = "https://pds006in.azurewebsites.net:443" + frequent_checkin_url_raw.replace("^.*?(?=/api)", "")
-frequent_checkout_url = "https://pds006in.azurewebsites.net:443" + frequent_checkout_url_raw.replace("^.*?(?=/api)", "")
+[Variables]
+frequent_checkin_url: {{ host }}{{ checkin_path | replace("^.*?(?=/api)", "") }}
+frequent_checkout_url: {{ host }}{{ checkout_path | replace("^.*?(?=/api)", "") }}
 
 [Asserts]
 jsonpath "$.device.id" exists
