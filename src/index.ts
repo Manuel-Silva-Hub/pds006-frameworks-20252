@@ -9,7 +9,7 @@ const photoRepository = new FileSystemPhotoRepository()
 const computerService = new ComputerService(
     deviceRepository, 
     photoRepository, 
-    new URL(Bun.env.BETTER_AUTH_PRODUCTION)
+    new URL("https://pds006in.azurewebsites.net:443")
 )
 
 const deviceService = new DeviceService(deviceRepository)
