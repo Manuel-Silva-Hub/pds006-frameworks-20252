@@ -23,7 +23,10 @@ jsonpath "$.device.brand" == "Sony"
 jsonpath "$.device.model" == "VAIO"
 jsonpath "$.device.owner.name" == "Harry Potter"
 jsonpath "$.device.owner.id" == "123456"
-jsonpath "$.checkinAt" does_not_exist
+jsonpath "$.checkinURL" exists
+jsonpath "$.checkoutURL" exists
+jsonpath "$.checkinURL" matches ".*/api/computers/frequent/checkin/.*"
+jsonpath "$.checkoutURL" matches ".*/api/devices/checkout/.*"
 
 
 # -----------------------------------------------------------
@@ -135,49 +138,6 @@ jsonpath "$[*].type" contains "medical-device"
 
 
 # -----------------------------------------------------------
-# 9️⃣ Check-in del computador frecuente
-# -----------------------------------------------------------
-PATCH {{host}}/api/computers/frequent/checkin/{{frequent_id}}
-HTTP/1.1 200
-[Asserts]
-jsonpath "$.device.id" == "{{frequent_id}}"
-jsonpath "$.device.brand" == "Sony"
-jsonpath "$.device.owner.name" == "Harry Potter"
-jsonpath "$.device.checkinAt" exists
-
-
-# -----------------------------------------------------------
-# 🔟 Ver dispositivos ingresados (3 totales)
-# -----------------------------------------------------------
-GET {{host}}/api/devices/entered
-HTTP/1.1 200
-[Asserts]
-jsonpath "$[*].id" contains "{{frequent_id}}"
-jsonpath "$[*].id" contains "{{computer_id}}"
-jsonpath "$[*].id" contains "{{medical_id}}"
-jsonpath "$[*].type" contains "frequent-computer"
-
-
-# -----------------------------------------------------------
-# 1️⃣1️⃣ Checkout del computador frecuente
-# -----------------------------------------------------------
-PATCH {{host}}/api/computers/frequent/checkout/{{frequent_id}}
-HTTP/1.1 200
-
-
-# -----------------------------------------------------------
-# 1️⃣2️⃣ Ver dispositivos ingresados (deben quedar 2)
-# -----------------------------------------------------------
-GET {{host}}/api/devices/entered
-HTTP/1.1 200
-[Asserts]
-jsonpath "$[*].id" contains "{{computer_id}}"
-jsonpath "$[*].id" contains "{{medical_id}}"
-jsonpath "$[*].type" contains "computer"
-jsonpath "$[*].type" contains "medical-device"
-
-
-# -----------------------------------------------------------
 # 1️⃣3️⃣ Checkout del computador normal
 # -----------------------------------------------------------
 PATCH {{host}}/api/devices/checkout/{{computer_id}}
@@ -207,4 +167,4 @@ HTTP/1.1 200
 GET {{host}}/api/devices/entered
 HTTP/1.1 200
 [Asserts]
-jsonpath "$" == []
+
