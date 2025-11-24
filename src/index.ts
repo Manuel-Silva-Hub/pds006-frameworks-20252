@@ -9,7 +9,7 @@ const photoRepository = new FileSystemPhotoRepository()
 const computerService = new ComputerService(
     deviceRepository, 
     photoRepository, 
-    new URL("https://pds006in.azurewebsites.net:443")
+    new URL("https://pds006in.azurewebsites.net:443/api")
 )
 
 const deviceService = new DeviceService(deviceRepository)
