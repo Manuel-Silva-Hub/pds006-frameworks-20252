@@ -1,46 +1,50 @@
 import { DeviceId } from "@/core/domain";
 import { DevicePhotoRepository } from "@/core/repository";
 import { Server } from "bun";
+import { mkdirSync, existsSync } from "fs";
 
-const MEDIA_PORT = Bun.env.MEDIA_PORT || 8080
-const BASE_PATH = "./public"
-const BASE_URL = `http://localhost:${MEDIA_PORT}/photo/`
+const PORT = Bun.env.PORT || 3000;
+
+// Azure-friendly path
+const BASE_PATH = "/home/site/wwwroot/public";
+
+// Make sure folder exists
+if (!existsSync(BASE_PATH)) {
+  mkdirSync(BASE_PATH, { recursive: true });
+}
+
+const BASE_URL = `${Bun.env.PUBLIC_URL}/photo/`;
 
 export class FileSystemPhotoRepository implements DevicePhotoRepository {
-  public server: Server
+  public server: Server;
 
   constructor() {
     this.server = Bun.serve({
-      port: MEDIA_PORT,
+      port: PORT,
       routes: {
-        "/photo/:filename": req => new Response(Bun.file(`${BASE_PATH}/${req.params.filename}`))
+        "/photo/:filename": req =>
+          new Response(Bun.file(`${BASE_PATH}/${req.params.filename}`))
       },
       error() {
-        return new Response(null, { status: 404 })
+        return new Response(null, { status: 404 });
       }
     });
   }
 
   async savePhoto(file: File, id: DeviceId): Promise<URL> {
-    const extension = this.getFileExtension(file)
-    if (!extension) return Promise.reject()
+    const extension = this.getFileExtension(file);
+    if (!extension) return Promise.reject();
 
-    const filename = `${id}.${extension}`
+    const filename = `${id}.${extension}`;
+    const path = `${BASE_PATH}/${filename}`;
 
-    const path = `${BASE_PATH}/${filename}`
+    await Bun.write(path, file);
 
-    await Bun.write(path, file)
-
-    return new URL(filename, BASE_URL)
+    return new URL(filename, BASE_URL);
   }
 
   getFileExtension(file: File): string | undefined {
-    const parts = file.name.split('.');
-
-    if (parts.length > 1) {
-      return parts.pop();
-    }
-
-    return undefined;
+    const parts = file.name.split(".");
+    return parts.length > 1 ? parts.pop() : undefined;
   }
 }
