@@ -9,7 +9,7 @@ const photoRepository = new FileSystemPhotoRepository()
 const computerService = new ComputerService(
     deviceRepository, 
     photoRepository, 
-    new URL("http://localhost:443/api")
+    new URL(Bun.env.BETTER_AUTH_PRODUCTION)
 )
 
 const deviceService = new DeviceService(deviceRepository)
