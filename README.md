@@ -74,12 +74,17 @@ pds006-frameworks-20252/
 git clone https://github.com/tu-usuario/pds006-frameworks-20252.git
 cd pds006-frameworks-20252
 
-2. Configurar variables de entorno (archivo .env)
+2. Instalación dependencias:
+bun add @elysiajs/opentelemetry @opentelemetry/sdk-trace-node @opentelemetry/exporter-trace-otlp-proto
+
+bun install
+
+3. Configurar variables de entorno (archivo .env)
 # Axiom (Observabilidad)
 AXIOM_TOKEN=xaat-tu-token-aqui
 AXIOM_DATASET=nombre-de-tu-dataset
 
-3. Obetener credenciales de Axiom
+4. Obetener credenciales de Axiom
 -Ir a axiom.co y crea una cuenta
 -Crear un nuevo Dataset
 -Generar un API Token con permisos de "Ingest"
