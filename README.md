@@ -27,3 +27,67 @@ bun run dev
 ```
 
 Open http://localhost:443/ with your browser to see the result.
+
+
+# Tecnologías:
+-Runtime: Bun - JavaScript runtime ultrarrápido
+-Observabilidad: Axiom + OpenTelemetry
+
+# Estructura del Proyecto:
+pds006-frameworks-20252/
+├── src/
+│   ├── adapter/           # Capa de adaptadores (Infraestructura)
+│   │   ├── api/
+│   │   │   └── elysia/    # API con Elysia (Puerto de entrada)
+│   │   │       ├── controller.elysia.ts
+│   │   │       ├── criteria.helper.ts
+│   │   │       ├── elysia.api.ts
+│   │   │       └── index.ts
+│   │   ├── photo/
+│   │   │   └── filesystem/ # Almacenamiento de fotos (Puerto de salida)
+│   │   └── repository/
+│   │       └── inmemory/   # Repositorios en memoria (Puerto de salida)
+│   ├── core/              # Núcleo del dominio (Lógica de negocio)
+│   │   ├── domain/        # Entidades y Value Objects de dominio
+│   │   ├── dto/           # Data Transfer Objects
+│   │   ├── repository/    # Interfaces de repositorios (Puertos)
+│   │   └── service/       # Servicios de aplicación
+│   └── tests/             # Tests del proyecto
+├── public/                # Archivos estáticos y fotos
+├── .env                   # Variables de entorno
+├── .gitignore
+├── Dockerfile
+├── bun.lock
+├── package.json
+├── tsconfig.json
+└── README.md
+
+
+# Requisitos Previos:
+-Bun >= 1.0.0
+-Node.js >= 18.0.0 (opcional, para compatibilidad)
+-Cuenta en Axiom para observabilidad
+
+
+# Instalaciones:
+1. Clonar repositorio:
+git clone https://github.com/tu-usuario/pds006-frameworks-20252.git
+cd pds006-frameworks-20252
+
+2. Configurar variables de entorno (archivo .env)
+# Axiom (Observabilidad)
+AXIOM_TOKEN=xaat-tu-token-aqui
+AXIOM_DATASET=nombre-de-tu-dataset
+
+3. Obetener credenciales de Axiom
+-Ir a axiom.co y crea una cuenta
+-Crear un nuevo Dataset
+-Generar un API Token con permisos de "Ingest"
+-Copia el token y dataset al archivo .env
+
+
+
+## Inicialización :
+bun run dev
+
+Servidor corriendo en: http://localhost:443

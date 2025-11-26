@@ -12,15 +12,11 @@ RUN apt-get update \
 
 WORKDIR /app
 
-# ESTO FALTA - Copiar archivos y instalar dependencias
 COPY package.json bun.lock* ./
 RUN bun install
 
-# Copiar el código
 COPY . .
 
-# Exponer puerto
 EXPOSE 443
 
-# ESTO FALTA - Comando para iniciar
 CMD ["bun", "run", "src/index.ts"]

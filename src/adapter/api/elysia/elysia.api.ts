@@ -2,6 +2,9 @@ import { ComputerService, DeviceService, MedicalDeviceService } from "@/core/ser
 import { Controller } from "./controller.elysia";
 
 import openapi from "@elysiajs/openapi";
+import { opentelemetry } from '@elysiajs/opentelemetry';
+import { BatchSpanProcessor } from '@opentelemetry/sdk-trace-node';
+import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto';
 import Elysia from "elysia";
 
 export class ElysiaApiAdapter {
@@ -13,6 +16,7 @@ export class ElysiaApiAdapter {
         deviceService: DeviceService,
         medicalDeviceService: MedicalDeviceService
     ) {
+
         this.controller = new Controller(
             computerService,
             deviceService,
@@ -20,13 +24,30 @@ export class ElysiaApiAdapter {
         )
 
         this.app = new Elysia()
+            .use(
+                opentelemetry({
+                    spanProcessors: [
+                        new BatchSpanProcessor(
+                            new OTLPTraceExporter({
+                                url: 'https://api.axiom.co/v1/traces',
+                                headers: {
+                                    Authorization: `Bearer ${Bun.env.AXIOM_TOKEN!}`,
+                                    'X-Axiom-Dataset': Bun.env.AXIOM_DATASET!
+                                }
+                            })
+                        )
+                    ]
+                })
+            )
+
             .use(openapi({}))
             .use(this.controller.routes())
     }
 
     async run() {
         this.app.listen(443)
-        
+
         console.log("El servidor esta corriendo en el puerto 443")
+        console.log("📊 Axiom tracing enabled")
     }
 }
