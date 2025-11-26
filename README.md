@@ -84,8 +84,7 @@ bun install
 AXIOM_TOKEN=xaat-tu-token-aqui
 AXIOM_DATASET=nombre-de-tu-dataset
 
-4. Obetener credenciales de Axiom
--Ir a axiom.co y crea una cuenta
+4. Obtener credenciales de Axiom
 -Crear un nuevo Dataset
 -Generar un API Token con permisos de "Ingest"
 -Copia el token y dataset al archivo .env
